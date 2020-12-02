@@ -1,5 +1,8 @@
 <h1 align="center">微信表情包工具</h1>
-<h3 align="center">快速将QQ或其他表情包转换成微信可添加的表情</h3>
+<h3 align="center">
+	<p>快速将QQ或其他表情包转换成微信可添加的表情</p>
+	<img src="screenshot_00.png">
+</h3>
 
 ## 举个栗子
 
