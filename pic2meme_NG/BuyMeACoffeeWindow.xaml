@@ -1,0 +1,12 @@
+﻿<Window x:Class="pic2meme.BuyMeACoffeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pic2meme"
+        mc:Ignorable="d"
+        Title="支持一下" Height="444.779" Width="499.896" ResizeMode="NoResize">
+    <Grid>
+        <Image x:Name="qrcode" HorizontalAlignment="Left" Height="392" Margin="10,10,0,0" VerticalAlignment="Top" Width="468"/>
+    </Grid>
+</Window>

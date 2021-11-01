@@ -17,5 +17,8 @@ __MACOSX
 [Oo]bj/
 [Rr]elease/
 
+packages/
+memes/
+
 # sublime
 *.sublime-workspace

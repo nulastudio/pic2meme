@@ -16,10 +16,10 @@
 
 ## 支持图片格式
 
-`png` `jpg` `bmp`
+`png` `jpg` `bmp` `gif`
 
-不支持大图以及透明图，微信原生支持`gif`动图直接添加为表情，所以不需要转换。
+## 图片大小限制
+`1024` x `1024`
 
-## 代码引用
-
-[NGif, Animated GIF Encoder for .NET](https://www.codeproject.com/Articles/11505/NGif-Animated-GIF-Encoder-for-NET)
+## 特别注意说明
+受表情包格式的限制，原图片色彩越多越丰富，转换出来的表情包失真则会越严重（半透明图片也一样），可以尝试切换不同转换模式得到效果最佳的一个表情包使用。
