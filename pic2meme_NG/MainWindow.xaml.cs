@@ -17,6 +17,7 @@ using Image = System.Drawing.Image;
 using System.IO;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
+using Path = System.IO.Path;
 
 namespace pic2meme
 {
@@ -152,8 +153,25 @@ namespace pic2meme
 
                 if (format == ImageFormat.Gif)
                 {
+                    var isGIFExt = Path.GetExtension(sourceImage).ToLower() == ".gif";
                     //本来就是GIF的话就不需要转换了，微信原生支持GIF当成是表情包
-                    tmpImage = sourceImage;
+                    if (isGIFExt)
+                    {
+                        tmpImage = sourceImage;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.Copy(sourceImage, tmpImage, true);
+                        }
+                        catch (Exception)
+                        {
+                            Notice.Content = "转换失败：生成临时文件失败";
+
+                            return;
+                        }
+                    }
                     if (covertMode == 1)
                     {
                         previewTask = Utils.Any2GIF(sourceImage, tmpPrevImage, 200);
