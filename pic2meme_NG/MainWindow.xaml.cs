@@ -18,6 +18,8 @@ using System.IO;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Path = System.IO.Path;
+using System.Xml;
+using System.Net;
 
 namespace pic2meme
 {
@@ -104,7 +106,68 @@ namespace pic2meme
 
             try
             {
-                if (currentDataObject.GetDataPresent(DataFormats.FileDrop))
+                if (currentDataObject.GetDataPresent(DataFormats.Html))
+                {
+                    var html = currentDataObject.GetData(DataFormats.Html) as string;
+
+                    if (string.IsNullOrEmpty(html))
+                    {
+                        Notice.Content = $"转换失败：无法读取网络图片";
+
+                        return;
+                    }
+
+                    var sourceUrl = "";
+
+                    var sourceUrlIndex = html.IndexOf("SourceURL:");
+                    if (sourceUrlIndex != -1)
+                    {
+                        var sourceUrlIndex2 = html.IndexOf("\r\n", sourceUrlIndex);
+                        if (sourceUrlIndex2 != -1)
+                        {
+                            var startPos = sourceUrlIndex + "SourceURL:".Length;
+                            sourceUrl = html.Substring(startPos, sourceUrlIndex2 - startPos);
+                        }
+                    }
+
+                    var body = "";
+
+                    var bodyIndex = html.IndexOf("<!--StartFragment-->");
+                    if (bodyIndex != -1)
+                    {
+                        var bodyIndex2 = html.IndexOf("<!--EndFragment-->", bodyIndex);
+                        if (bodyIndex2 != -1)
+                        {
+                            var startPos = bodyIndex + "<!--StartFragment-->".Length;
+                            body = html.Substring(startPos, bodyIndex2 - startPos);
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(body))
+                    {
+                        Notice.Content = $"转换失败：无法读取网络图片";
+
+                        return;
+                    }
+
+                    var xml = new XmlDocument();
+                    xml.LoadXml(body);
+
+                    if (xml.ChildNodes.Count != 1 || xml.FirstChild.Name != "img" || xml.FirstChild.Attributes["src"] == null)
+                    {
+                        return;
+                    }
+
+                    var imgUrl = xml.FirstChild.Attributes["src"].Value;
+
+                    using (WebClient client = new WebClient())
+                    {
+                        var tmp = GenerateTempFile(".gif");
+                        client.DownloadFile(imgUrl, tmp);
+                        sourceImage = tmp;
+                    }
+                }
+                else if (currentDataObject.GetDataPresent(DataFormats.FileDrop))
                 {
                     sourceImage = ((System.Array)currentDataObject.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
                 }
