@@ -1,25 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Drawing;
-using System.Drawing.Imaging;
-using Image = System.Drawing.Image;
-using System.IO;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
-using Path = System.IO.Path;
-using System.Xml;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Xml;
+
+using Path = System.IO.Path;
 
 namespace pic2meme
 {
@@ -37,22 +26,6 @@ namespace pic2meme
             _init = true;
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
-
-            ////SetPreview(@"C:\Users\LiesAuer\Desktop\3.gif");
-            ////var format1 = Utils.DetectFormat(@"C:\Users\LiesAuer\Desktop\1.jpg");
-            ////var format2 = Utils.DetectFormat(@"C:\Users\LiesAuer\Desktop\2.gif");
-            ////var format3 = Utils.DetectFormat(@"C:\Users\LiesAuer\Desktop\3.gif");
-            ////Utils.Any2GIF2(@"C:\Users\LiesAuer\Desktop\1.jpg", @"C:\Users\LiesAuer\Desktop\11.gif");
-            //Utils.Any2GIF(@"F:\Projects\pic2meme_NG\memes\test1.png", @"F:\Projects\pic2meme_NG\memes\test1_1.gif");
-            //Utils.Any2GIF2(@"F:\Projects\pic2meme_NG\memes\test1.png", @"F:\Projects\pic2meme_NG\memes\test1_2.gif");
-            //Utils.Any2GIF(@"F:\Projects\pic2meme_NG\memes\22.png", @"F:\Projects\pic2meme_NG\memes\22_1.gif");
-            //Utils.Any2GIF2(@"F:\Projects\pic2meme_NG\memes\22.png", @"F:\Projects\pic2meme_NG\memes\22_2.gif");
-            ////Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/50.png");
-            ////Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/200.png");
-            ////Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/400.png");
-            ////Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/100x600.png");
-            //Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/600x100.png");
-            //Preview.Uri = new Uri($"pack://siteoforigin:,,,/F:/Projects/pic2meme_NG/memes/44.gif");
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -163,7 +136,7 @@ namespace pic2meme
                     using (WebClient client = new WebClient())
                     {
                         var tmp = GenerateTempFile(".gif");
-                        client.DownloadFile(imgUrl, tmp);
+                        await client.DownloadFileTaskAsync(imgUrl, tmp);
                         sourceImage = tmp;
                     }
                 }

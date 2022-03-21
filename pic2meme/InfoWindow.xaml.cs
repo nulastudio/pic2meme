@@ -15,24 +15,23 @@ using System.Windows.Shapes;
 namespace pic2meme
 {
     /// <summary>
-    /// ChangeLogWindow.xaml 的交互逻辑
+    /// InfoWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ChangeLogWindow : Window
+    public partial class InfoWindow : Window
     {
-        public ChangeLogWindow()
+        public InfoWindow()
         {
             InitializeComponent();
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
-            ChangeLog.Text = @"
-v1.1.0 - 2021/10/28
-1. UI优化、性能优化
-2. GIF动图预览显示
+            Usage.Text = @"
+支持图片格式：JPG、PNG、BMP、GIF
+表情包透明度：支持（但不支持半透明）
+图片大小限制：1024x1024
 
-v1.0.0 - 2020/12/02
-1. 微信表情包转换
+特别注意说明：受表情包格式的限制，原图片色彩越多越丰富，转换出来的表情包失真则会越严重（半透明图片也一样），可以尝试切换不同转换模式得到效果最佳的一个表情包使用。
 
-© 2020-2021 LiesAuer
+© 2020-2022 LiesAuer
 https://www.liesauer.net/
 ".Trim();
         }
