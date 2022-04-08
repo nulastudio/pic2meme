@@ -25,6 +25,9 @@ namespace pic2meme
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
             ChangeLog.Text = @"
+v1.2.1 - 2022/04/08
+1. 修复无法直接转换QQ图片的问题
+
 v1.2.0 - 2022/03/21
 1. 支持转换网页图片
 

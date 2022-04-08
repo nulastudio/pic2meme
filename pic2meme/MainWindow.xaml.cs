@@ -108,10 +108,11 @@ namespace pic2meme
                     var bodyIndex = html.IndexOf("<!--StartFragment-->");
                     if (bodyIndex != -1)
                     {
-                        var bodyIndex2 = html.IndexOf("<!--EndFragment-->", bodyIndex);
+                        var startPos = bodyIndex + "<!--StartFragment-->".Length;
+
+                        var bodyIndex2 = html.IndexOf("<!--EndFragment-->", startPos);
                         if (bodyIndex2 != -1)
                         {
-                            var startPos = bodyIndex + "<!--StartFragment-->".Length;
                             body = html.Substring(startPos, bodyIndex2 - startPos);
                         }
                     }
@@ -123,15 +124,19 @@ namespace pic2meme
                         return;
                     }
 
-                    var xml = new XmlDocument();
-                    xml.LoadXml(body);
+                    var imgUrl = "";
 
-                    if (xml.ChildNodes.Count != 1 || xml.FirstChild.Name != "img" || xml.FirstChild.Attributes["src"] == null)
+                    var imgIndex = body.IndexOf(@"<img src=""");
+                    if (imgIndex != -1)
                     {
-                        return;
-                    }
+                        var startPos = imgIndex + @"<img src=""".Length;
 
-                    var imgUrl = xml.FirstChild.Attributes["src"].Value;
+                        var imgIndex2 = body.IndexOf(@"""", startPos);
+                        if (imgIndex2 != -1)
+                        {
+                            imgUrl = body.Substring(startPos, imgIndex2 - startPos);
+                        }
+                    }
 
                     using (WebClient client = new WebClient())
                     {
