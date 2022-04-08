@@ -25,6 +25,9 @@ namespace pic2meme
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
             ChangeLog.Text = @"
+v1.3 - 2022/04/08
+1. 支持多种输出大小
+
 v1.2.2 - 2022/04/08
 1. 优化UI
 2. 优化预览图生成速度

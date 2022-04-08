@@ -78,16 +78,16 @@ namespace pic2meme
             return (width, height);
         }
 
-        public static Task<bool> Any2GIF(string filePath, string savePath, int maxsize = 0)
+        public static Task<bool> Any2GIF(string filePath, string savePath, int forceSize = 0)
         {
             try
             {
                 return ISImage.LoadAsync(filePath).ContinueWith(task => {
                     var image = task.Result;
-                    if (maxsize > 0 && (image.Width > maxsize || image.Height > maxsize))
+                    int max = Math.Max(image.Width, image.Height);
+                    if (forceSize > 0 && max != forceSize)
                     {
-                        int max = Math.Max(image.Width, image.Height);
-                        float scale = max / maxsize;
+                        float scale = max / forceSize;
                         image.Mutate(x => x.Resize((int)(image.Width / scale), (int)(image.Height / scale)));
                     }
                     image.SaveAsGif(savePath);
@@ -102,16 +102,16 @@ namespace pic2meme
             }
         }
 
-        public static Task<bool> Any2GIF2(string filePath, string savePath, int maxsize = 0)
+        public static Task<bool> Any2GIF2(string filePath, string savePath, int forceSize = 0)
         {
             try
             {
                 return ISImage.LoadAsync(filePath).ContinueWith(task => {
                     var image = task.Result;
-                    if (maxsize > 0 && (image.Width > maxsize || image.Height > maxsize))
+                    int max = Math.Max(image.Width, image.Height);
+                    if (forceSize > 0 && max != forceSize)
                     {
-                        int max = Math.Max(image.Width, image.Height);
-                        float scale = max / maxsize;
+                        float scale = max / forceSize;
                         image.Mutate(x => x.Resize((int)(image.Width / scale), (int)(image.Height / scale)));
                     }
                     var gifEncoder = new GifEncoder();

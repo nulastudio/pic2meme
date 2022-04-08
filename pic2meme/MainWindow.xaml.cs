@@ -55,6 +55,16 @@ namespace pic2meme
             return 0;
         }
 
+        private int GetSizeMode()
+        {
+            if (SizeMode_Raw.IsChecked.GetValueOrDefault(false)) return 1;
+            if (SizeMode_40.IsChecked.GetValueOrDefault(false)) return 2;
+            if (SizeMode_80.IsChecked.GetValueOrDefault(false)) return 3;
+            if (SizeMode_120.IsChecked.GetValueOrDefault(false)) return 4;
+
+            return 0;
+        }
+
         private async void pic2meme()
         {
             if (!_init) return;
@@ -67,6 +77,7 @@ namespace pic2meme
             Notice.Content = "转换中...";
 
             var covertMode = GetCovertMode();
+            var sizeMode = GetSizeMode();
 
             if (covertMode == 0)
             {
@@ -74,6 +85,17 @@ namespace pic2meme
 
                 return;
             }
+            if (sizeMode == 0)
+            {
+                Notice.Content = $"转换失败：不支持的输出大小{sizeMode}";
+
+                return;
+            }
+
+            var forceSize = 0;
+            if (sizeMode == 2) forceSize = 40;
+            if (sizeMode == 3) forceSize = 80;
+            if (sizeMode == 4) forceSize = 120;
 
             var sourceImage = "";
 
@@ -211,16 +233,29 @@ namespace pic2meme
                             return;
                         }
                     }
+                    if (sizeMode > 1)
+                    {
+                        sourceImage = tmpImage;
+                        tmpImage = GenerateTempFile(".gif");
+                        if (covertMode == 1)
+                        {
+                            covertTask = Utils.Any2GIF(sourceImage, tmpImage, forceSize);
+                        }
+                        else if (covertMode == 2)
+                        {
+                            covertTask = Utils.Any2GIF2(sourceImage, tmpImage, forceSize);
+                        }
+                    }
                 }
                 else
                 {
                     if (covertMode == 1)
                     {
-                        covertTask = Utils.Any2GIF(sourceImage, tmpImage);
+                        covertTask = Utils.Any2GIF(sourceImage, tmpImage, forceSize);
                     }
                     else if (covertMode == 2)
                     {
-                        covertTask = Utils.Any2GIF2(sourceImage, tmpImage);
+                        covertTask = Utils.Any2GIF2(sourceImage, tmpImage, forceSize);
                     }
                 }
             }
@@ -351,17 +386,7 @@ namespace pic2meme
             buymeacoffee.ShowDialog();
         }
 
-        private void CovertMode1_Checked(object sender, RoutedEventArgs e)
-        {
-            pic2meme();
-        }
-
-        private void CovertMode2_Checked(object sender, RoutedEventArgs e)
-        {
-            pic2meme();
-        }
-
-        private void CovertMode3_Checked(object sender, RoutedEventArgs e)
+        private void ReCovert(object sender, RoutedEventArgs e)
         {
             pic2meme();
         }
