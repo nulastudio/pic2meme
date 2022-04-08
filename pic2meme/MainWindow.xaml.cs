@@ -168,10 +168,8 @@ namespace pic2meme
             }
 
             var tmpImage = GenerateTempFile(".gif");
-            var tmpPrevImage = GenerateTempFile(".gif");
 
             Task<bool> covertTask = null;
-            Task<bool> previewTask = null;
 
             try
             {
@@ -213,26 +211,16 @@ namespace pic2meme
                             return;
                         }
                     }
-                    if (covertMode == 1)
-                    {
-                        previewTask = Utils.Any2GIF(sourceImage, tmpPrevImage, 200);
-                    }
-                    else if (covertMode == 2)
-                    {
-                        previewTask = Utils.Any2GIF(sourceImage, tmpPrevImage, 200);
-                    }
                 }
                 else
                 {
                     if (covertMode == 1)
                     {
                         covertTask = Utils.Any2GIF(sourceImage, tmpImage);
-                        previewTask = Utils.Any2GIF(sourceImage, tmpPrevImage, 200);
                     }
                     else if (covertMode == 2)
                     {
                         covertTask = Utils.Any2GIF2(sourceImage, tmpImage);
-                        previewTask = Utils.Any2GIF(sourceImage, tmpPrevImage, 200);
                     }
                 }
             }
@@ -256,16 +244,8 @@ namespace pic2meme
             Notice.Content = "转换成功，直接粘贴到微信发送即可";
             SetImageToClipboard(tmpImage);
 
-            if (previewTask != null)
-            {
-                PreviewLabel.Content = "预览图生成中...";
-                _ = previewTask.ContinueWith(_ =>
-                {
-                    this.PreviewLabel.Dispatcher.Invoke(() => {
-                        SetPreview(tmpPrevImage);
-                    });
-                });
-            }
+            PreviewLabel.Content = "预览图生成中...";
+            SetPreview(tmpImage);
         }
 
         private string SaveBitmapSource(BitmapSource source)
@@ -310,6 +290,9 @@ namespace pic2meme
                 PreviewLabel.Visibility = Visibility.Hidden;
                 PreviewLabel.Content = "";
                 Preview.Uri = new Uri(@"pack://siteoforigin:,,,/" + imageFile.Replace(@"\", @"/"));
+                var size = Utils.GetImageSize(imageFile);
+                Preview.MaxWidth = size.width;
+                Preview.MaxHeight = size.height;
             }
             catch (Exception)
             {

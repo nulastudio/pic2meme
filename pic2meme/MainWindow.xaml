@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pic2meme" xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
-        Title="微信表情包工具 v1.2.1" Height="499.632" Width="463.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
+        Title="微信表情包工具 v1.2.2" Height="535.632" Width="538.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
     <Grid>
-        <Label x:Name="Notice" Content="拖动或粘贴图片到此处进行表情包转换" FontSize="22" Margin="30,20,0,0" VerticalAlignment="Top" Height="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="395" />
-        <hc:GifImage x:Name="Preview" Stretch="Uniform" Height="201" Margin="127,144,0,126" HorizontalAlignment="Left" Width="201" />
+        <Label x:Name="Notice" Content="拖动或粘贴图片到此处进行表情包转换" FontSize="22" Margin="30,20,30,0" VerticalAlignment="Top" Height="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
+        <hc:GifImage x:Name="Preview" Stretch="Uniform" Height="200" Width="200" Margin="128,151,129.5,127.5" />
+
+
         <Button x:Name="Usage" Content="使用说明" HorizontalAlignment="Left" Margin="30,0,0,27" VerticalAlignment="Bottom" Width="116" Height="52" FontSize="20" Click="Usage_Click" FocusVisualStyle="{x:Null}" />
-        <Button x:Name="ChangeLog" Content="更新历史" HorizontalAlignment="Left" Margin="170,0,0,27" VerticalAlignment="Bottom" Width="116" Height="52" FontSize="20" Click="ChangeLog_Click" FocusVisualStyle="{x:Null}" />
-        <Button x:Name="BuyMyACoffee" Content="支持一下" HorizontalAlignment="Left" Margin="310,0,0,27" VerticalAlignment="Bottom" Height="52" FontSize="20" Click="BuyMyACoffee_Click" FocusVisualStyle="{x:Null}" Width="116" />
-        <RadioButton x:Name="CovertMode1" Content="模式1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,94,0,0" Height="38" Width="85" FontSize="20" GroupName="CovertMode" IsChecked="True" Checked="CovertMode1_Checked" FocusVisualStyle="{x:Null}" />
-        <RadioButton x:Name="CovertMode2" Content="模式2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="340,94,0,0" Height="38" Width="85" FontSize="20" GroupName="CovertMode" Checked="CovertMode2_Checked" FocusVisualStyle="{x:Null}" />
-        <Label x:Name="PreviewLabel" Content="" HorizontalAlignment="Left" Margin="128,225,0,0" VerticalAlignment="Top" BorderThickness="0"  FontSize="22" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+        <Button x:Name="ChangeLog" Content="更新历史" HorizontalAlignment="Left" Margin="207,0,0,27" VerticalAlignment="Bottom" Width="116" Height="52" FontSize="20" Click="ChangeLog_Click" FocusVisualStyle="{x:Null}" />
+        <Button x:Name="BuyMyACoffee" Content="支持一下" HorizontalAlignment="Stretch" Margin="386,0,30.5,27" VerticalAlignment="Bottom" Height="52" FontSize="20" Click="BuyMyACoffee_Click" FocusVisualStyle="{x:Null}" />
+        <RadioButton x:Name="CovertMode1" Content="模式1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,94,0,0" Height="38" Width="85" FontSize="20" GroupName="CovertMode" IsChecked="True" Checked="CovertMode1_Checked" FocusVisualStyle="{x:Null}" />
+        <RadioButton x:Name="CovertMode2" Content="模式2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,94,70.5,0" Height="38" FontSize="20" GroupName="CovertMode" Checked="CovertMode2_Checked" FocusVisualStyle="{x:Null}" Width="85" />
+        <Label x:Name="PreviewLabel" Content="" Margin="166,240,166.5,217" BorderThickness="0"  FontSize="18" Width="200" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
     </Grid>
 </Window>
