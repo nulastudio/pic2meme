@@ -19,6 +19,7 @@ namespace pic2meme
     {
         private bool _init;
         private IDataObject currentDataObject;
+        private string sourceImage;
 
         public MainWindow()
         {
@@ -44,7 +45,7 @@ namespace pic2meme
         private void HandleDataObject(IDataObject dataObject)
         {
             currentDataObject = dataObject;
-            pic2meme();
+            pic2meme(true);
         }
 
         private int GetCovertMode()
@@ -65,7 +66,7 @@ namespace pic2meme
             return 0;
         }
 
-        private async void pic2meme()
+        private async void pic2meme(bool keepOriginal = false)
         {
             if (!_init) return;
 
@@ -99,87 +100,99 @@ namespace pic2meme
 
             var sourceImage = "";
 
-            try
+            if (keepOriginal || string.IsNullOrEmpty(this.sourceImage))
             {
-                if (currentDataObject.GetDataPresent(DataFormats.Html))
+                try
                 {
-                    var html = currentDataObject.GetData(DataFormats.Html) as string;
-
-                    if (string.IsNullOrEmpty(html))
+                    if (currentDataObject.GetDataPresent(DataFormats.Html))
                     {
-                        Notice.Content = $"转换失败：无法读取网络图片";
+                        var html = currentDataObject.GetData(DataFormats.Html) as string;
 
-                        return;
-                    }
-
-                    var sourceUrl = "";
-
-                    var sourceUrlIndex = html.IndexOf("SourceURL:");
-                    if (sourceUrlIndex != -1)
-                    {
-                        var sourceUrlIndex2 = html.IndexOf("\r\n", sourceUrlIndex);
-                        if (sourceUrlIndex2 != -1)
+                        if (string.IsNullOrEmpty(html))
                         {
-                            var startPos = sourceUrlIndex + "SourceURL:".Length;
-                            sourceUrl = html.Substring(startPos, sourceUrlIndex2 - startPos);
+                            Notice.Content = $"转换失败：无法读取网络图片";
+
+                            return;
+                        }
+
+                        var sourceUrl = "";
+
+                        var sourceUrlIndex = html.IndexOf("SourceURL:");
+                        if (sourceUrlIndex != -1)
+                        {
+                            var sourceUrlIndex2 = html.IndexOf("\r\n", sourceUrlIndex);
+                            if (sourceUrlIndex2 != -1)
+                            {
+                                var startPos = sourceUrlIndex + "SourceURL:".Length;
+                                sourceUrl = html.Substring(startPos, sourceUrlIndex2 - startPos);
+                            }
+                        }
+
+                        var body = "";
+
+                        var bodyIndex = html.IndexOf("<!--StartFragment-->");
+                        if (bodyIndex != -1)
+                        {
+                            var startPos = bodyIndex + "<!--StartFragment-->".Length;
+
+                            var bodyIndex2 = html.IndexOf("<!--EndFragment-->", startPos);
+                            if (bodyIndex2 != -1)
+                            {
+                                body = html.Substring(startPos, bodyIndex2 - startPos);
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(body))
+                        {
+                            Notice.Content = $"转换失败：无法读取网络图片";
+
+                            return;
+                        }
+
+                        var imgUrl = "";
+
+                        var imgIndex = body.IndexOf(@"<img src=""");
+                        if (imgIndex != -1)
+                        {
+                            var startPos = imgIndex + @"<img src=""".Length;
+
+                            var imgIndex2 = body.IndexOf(@"""", startPos);
+                            if (imgIndex2 != -1)
+                            {
+                                imgUrl = body.Substring(startPos, imgIndex2 - startPos);
+                            }
+                        }
+
+                        using (WebClient client = new WebClient())
+                        {
+                            var tmp = GenerateTempFile(".gif");
+                            await client.DownloadFileTaskAsync(imgUrl, tmp);
+                            sourceImage = tmp;
                         }
                     }
-
-                    var body = "";
-
-                    var bodyIndex = html.IndexOf("<!--StartFragment-->");
-                    if (bodyIndex != -1)
+                    else if (currentDataObject.GetDataPresent(DataFormats.FileDrop))
                     {
-                        var startPos = bodyIndex + "<!--StartFragment-->".Length;
-
-                        var bodyIndex2 = html.IndexOf("<!--EndFragment-->", startPos);
-                        if (bodyIndex2 != -1)
-                        {
-                            body = html.Substring(startPos, bodyIndex2 - startPos);
-                        }
+                        sourceImage = ((System.Array)currentDataObject.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
                     }
-
-                    if (string.IsNullOrEmpty(body))
+                    else if (currentDataObject.GetDataPresent(DataFormats.Bitmap))
                     {
-                        Notice.Content = $"转换失败：无法读取网络图片";
-
-                        return;
-                    }
-
-                    var imgUrl = "";
-
-                    var imgIndex = body.IndexOf(@"<img src=""");
-                    if (imgIndex != -1)
-                    {
-                        var startPos = imgIndex + @"<img src=""".Length;
-
-                        var imgIndex2 = body.IndexOf(@"""", startPos);
-                        if (imgIndex2 != -1)
-                        {
-                            imgUrl = body.Substring(startPos, imgIndex2 - startPos);
-                        }
-                    }
-
-                    using (WebClient client = new WebClient())
-                    {
-                        var tmp = GenerateTempFile(".gif");
-                        await client.DownloadFileTaskAsync(imgUrl, tmp);
-                        sourceImage = tmp;
+                        var image = currentDataObject.GetData(DataFormats.Bitmap) as BitmapSource;
+                        sourceImage = SaveBitmapSource(image);
                     }
                 }
-                else if (currentDataObject.GetDataPresent(DataFormats.FileDrop))
+                catch
                 {
-                    sourceImage = ((System.Array)currentDataObject.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                    sourceImage = null;
                 }
-                else if (currentDataObject.GetDataPresent(DataFormats.Bitmap))
+
+                if (keepOriginal)
                 {
-                    var image = currentDataObject.GetData(DataFormats.Bitmap) as BitmapSource;
-                    sourceImage = SaveBitmapSource(image);
+                    this.sourceImage = sourceImage;
                 }
             }
-            catch
+            else
             {
-                sourceImage = null;
+                sourceImage = this.sourceImage;
             }
 
             if (string.IsNullOrEmpty(sourceImage))

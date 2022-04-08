@@ -87,7 +87,7 @@ namespace pic2meme
                     int max = Math.Max(image.Width, image.Height);
                     if (forceSize > 0 && max != forceSize)
                     {
-                        float scale = max / forceSize;
+                        float scale = (float)max / (float)forceSize;
                         image.Mutate(x => x.Resize((int)(image.Width / scale), (int)(image.Height / scale)));
                     }
                     image.SaveAsGif(savePath);
@@ -111,7 +111,7 @@ namespace pic2meme
                     int max = Math.Max(image.Width, image.Height);
                     if (forceSize > 0 && max != forceSize)
                     {
-                        float scale = max / forceSize;
+                        float scale = (float)max / (float)forceSize;
                         image.Mutate(x => x.Resize((int)(image.Width / scale), (int)(image.Height / scale)));
                     }
                     var gifEncoder = new GifEncoder();
