@@ -25,6 +25,9 @@ namespace pic2meme
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
             ChangeLog.Text = @"
+v1.3.2 - 2023/05/03
+1. 取消1024大小限制，增加200*200的输出大小
+
 v1.3 - 2022/04/08
 1. 支持多种输出大小
 
@@ -45,7 +48,7 @@ v1.1.0 - 2021/10/28
 v1.0.0 - 2020/12/02
 1. 微信表情包转换
 
-© 2020-2022 LiesAuer
+© 2020-2023 LiesAuer
 https://www.liesauer.net/
 ".Trim();
         }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pic2meme" xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
-        Title="微信表情包工具 v1.3" Height="562.632" Width="538.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
+        Title="微信表情包工具 v1.3.2" Height="562.632" Width="538.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
     <Grid>
         <Label x:Name="Notice" Content="拖动或粘贴图片到此处进行表情包转换" FontSize="22" Margin="30,20,30,0" VerticalAlignment="Top" Height="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
         <hc:GifImage x:Name="Preview" Stretch="Uniform" Height="200" Width="200" Margin="166,191,166.5,116" />
@@ -17,10 +17,11 @@
         <RadioButton x:Name="CovertMode1" Content="模式1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,86,0,0" Height="38" Width="85" FontSize="20" GroupName="CovertMode" IsChecked="True" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
         <RadioButton x:Name="CovertMode2" Content="模式2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,86,19.5,0" Height="38" FontSize="20" GroupName="CovertMode" Checked="ReCovert" FocusVisualStyle="{x:Null}" Width="85" />
         <Label x:Name="PreviewLabel" Content="" Margin="166,266,166.5,191" BorderThickness="0"  FontSize="18" Width="200" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-        <RadioButton x:Name="SizeMode_Raw" Content="原始" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,132,0,0" Height="38" Width="70" FontSize="20" GroupName="SizeMode" IsChecked="True" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
-        <RadioButton x:Name="SizeMode_40" Content="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="243,132,0,0" Height="38" Width="70" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
-        <RadioButton x:Name="SizeMode_80" Content="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="334,132,0,0" Height="38" Width="70" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
-        <RadioButton x:Name="SizeMode_120" Content="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,132,34.5,0" Height="38" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" Width="70" />
+        <RadioButton x:Name="SizeMode_Raw" Content="原始" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,132,0,0" Height="38" Width="65" FontSize="20" GroupName="SizeMode" IsChecked="True" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
+        <RadioButton x:Name="SizeMode_40" Content="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,132,0,0" Height="38" Width="50" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
+        <RadioButton x:Name="SizeMode_80" Content="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="283,132,0,0" Height="38" Width="50" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" />
+        <RadioButton x:Name="SizeMode_120" Content="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,132,118.5,0" Height="38" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" Width="65" />
+        <RadioButton x:Name="SizeMode_200" Content="200" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,132,39.5,0" Height="38" FontSize="20" GroupName="SizeMode" IsChecked="False" Checked="ReCovert" FocusVisualStyle="{x:Null}" Width="65" />
         <Label Content="转换模式：" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" BorderThickness="0" Width="108" FontSize="20" Height="36"/>
         <Label Content="输出大小：" HorizontalAlignment="Left" Margin="20,133,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" BorderThickness="0" Width="108" FontSize="20" Height="36"/>
     </Grid>

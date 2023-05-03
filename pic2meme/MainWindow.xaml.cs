@@ -62,6 +62,7 @@ namespace pic2meme
             if (SizeMode_40.IsChecked.GetValueOrDefault(false)) return 2;
             if (SizeMode_80.IsChecked.GetValueOrDefault(false)) return 3;
             if (SizeMode_120.IsChecked.GetValueOrDefault(false)) return 4;
+            if (SizeMode_200.IsChecked.GetValueOrDefault(false)) return 5;
 
             return 0;
         }
@@ -97,6 +98,7 @@ namespace pic2meme
             if (sizeMode == 2) forceSize = 40;
             if (sizeMode == 3) forceSize = 80;
             if (sizeMode == 4) forceSize = 120;
+            if (sizeMode == 5) forceSize = 200;
 
             var sourceImage = "";
 
@@ -217,13 +219,13 @@ namespace pic2meme
                     return;
                 }
 
-                var (width, height) = Utils.GetImageSize(sourceImage);
+                /*var (width, height) = Utils.GetImageSize(sourceImage);
                 if (width > 1024 || height > 1024)
                 {
                     Notice.Content = "转换失败：图片大小不得超过1024 x 1024";
 
                     return;
-                }
+                }*/
 
                 if (format == ImageFormat.Gif)
                 {
