@@ -219,13 +219,11 @@ namespace pic2meme
                     return;
                 }
 
-                /*var (width, height) = Utils.GetImageSize(sourceImage);
+                var (width, height) = Utils.GetImageSize(sourceImage);
                 if (width > 1024 || height > 1024)
                 {
-                    Notice.Content = "转换失败：图片大小不得超过1024 x 1024";
-
-                    return;
-                }*/
+                    if (sizeMode == 1) forceSize = 1024;
+                }
 
                 if (format == ImageFormat.Gif)
                 {
