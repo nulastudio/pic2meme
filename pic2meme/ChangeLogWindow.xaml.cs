@@ -25,6 +25,9 @@ namespace pic2meme
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
             ChangeLog.Text = @"
+v1.3.3 - 2023/05/04
+1. 修复图片超过1024时，发送到微信会变成文件的问题
+
 v1.3.2 - 2023/05/03
 1. 取消1024大小限制，增加200*200的输出大小
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pic2meme" xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
-        Title="微信表情包工具 v1.3.2" Height="562.632" Width="538.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
+        Title="微信表情包工具 v1.3.3" Height="562.632" Width="538.297" AllowDrop="True" Drop="Window_Drop" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
     <Grid>
         <Label x:Name="Notice" Content="拖动或粘贴图片到此处进行表情包转换" FontSize="22" Margin="30,20,30,0" VerticalAlignment="Top" Height="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
         <hc:GifImage x:Name="Preview" Stretch="Uniform" Height="200" Width="200" Margin="166,191,166.5,116" />
