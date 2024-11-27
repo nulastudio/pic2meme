@@ -19,6 +19,8 @@ __MACOSX
 
 packages/
 memes/
+PublishProfiles/
+pic2meme.csproj.user
 
 # sublime
 *.sublime-workspace

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace pic2meme
 {
@@ -25,6 +13,9 @@ namespace pic2meme
             this.MinWidth = this.MaxWidth = this.Width;
             this.MinHeight = this.MaxHeight = this.Height;
             ChangeLog.Text = @"
+v1.4.0 - 2024/11/26
+1. 支持WebP格式
+
 v1.3.3 - 2023/05/04
 1. 修复图片超过1024时，发送到微信会变成文件的问题
 
@@ -51,7 +42,7 @@ v1.1.0 - 2021/10/28
 v1.0.0 - 2020/12/02
 1. 微信表情包转换
 
-© 2020-2023 LiesAuer
+© 2020-2024 LiesAuer
 https://www.liesauer.net/
 ".Trim();
         }

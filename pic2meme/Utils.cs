@@ -3,19 +3,15 @@ using SixLabors.ImageSharp.Formats.Bmp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.Processing;
 
 using System;
-using System.Drawing;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
 using System.Security.Cryptography;
-
-using Image = System.Drawing.Image;
-using ISImage = SixLabors.ImageSharp.Image;
-using SixLabors.ImageSharp.Processing;
 using System.Text;
 using System.Threading.Tasks;
+
+using ISImage = SixLabors.ImageSharp.Image;
 
 namespace pic2meme
 {
@@ -26,12 +22,13 @@ namespace pic2meme
         Png,
         Bmp,
         Gif,
+        WebP,
     }
     class Utils
     {
         public static string md5(string content)
         {
-            var md5 = new MD5CryptoServiceProvider();
+            var md5 = MD5.Create();
             byte[] data = System.Text.Encoding.Default.GetBytes(content);
             byte[] result = md5.ComputeHash(data);
             StringBuilder @string = new StringBuilder();
@@ -52,6 +49,7 @@ namespace pic2meme
                 if (format is PngFormat) return ImageFormat.Png;
                 if (format is BmpFormat) return ImageFormat.Bmp;
                 if (format is GifFormat) return ImageFormat.Gif;
+                if (format is WebpFormat) return ImageFormat.WebP;
             }
             catch (Exception)
             {
@@ -114,9 +112,10 @@ namespace pic2meme
                         float scale = (float)max / (float)forceSize;
                         image.Mutate(x => x.Resize((int)(image.Width / scale), (int)(image.Height / scale)));
                     }
-                    var gifEncoder = new GifEncoder();
-                    gifEncoder.ColorTableMode = GifColorTableMode.Local;
-                    gifEncoder.Quantizer = SixLabors.ImageSharp.Processing.KnownQuantizers.Octree;
+                    var gifEncoder = new GifEncoder(){
+                        ColorTableMode = GifColorTableMode.Local,
+                        Quantizer = SixLabors.ImageSharp.Processing.KnownQuantizers.Octree,
+                    };
                     image.SaveAsGif(savePath, gifEncoder);
                     image.Dispose();
 
